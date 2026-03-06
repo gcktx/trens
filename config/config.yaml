@@ -374,6 +374,50 @@ rss:
       name: "A Wealth of Common Sense"
       url: "https://awealthofcommonsense.com/feed/"
       max_age_days: 5
+    rss:
+  enabled: true
+  freshness_filter:
+    enabled: true
+    max_age_days: 3
+    # ===============================================================
+    # 📊 第五组：市场指数、基金(ETF)与大宗商品 (新增·监控行情)
+    # 特点：实时价格分析、ETF 资金流向、原油/黄金走势
+    # 策略：行情类时效性极高，设置为 1-2 天
+    # ===============================================================
+    
+    # --- 原油与大宗商品 ---
+    - id: "oil-price-com"
+      name: "Oil Price (Crude Oil News)"
+      url: "https://www.oilprice.com/rss.xml"
+      max_age_days: 1  # 油价波动快，只看当天
+
+    - id: "kitco-gold"
+      name: "Kitco Metals (Gold/Oil)"
+      url: "https://www.kitco.com/rss/precious-metals-news.xml"
+      max_age_days: 2
+
+    # --- 美股大盘与 ETF 分析 ---
+    - id: "etf-trend"
+      name: "ETF Trends"
+      url: "https://www.etftrends.com/feed/"
+      max_age_days: 2  # 监控 ETF 资金流向和策略
+
+    - id: "seeking-alpha-etf"
+      name: "Seeking Alpha (ETFs)"
+      url: "https://seekingalpha.com/tag/etfs/feed.xml"
+      max_age_days: 2
+
+    - id: "marketwatch-markets"
+      name: "MarketWatch (Markets)"
+      url: "https://www.marketwatch.com/rss/markets"
+      max_age_days: 1
+
+    # --- 特定基金/机构动态 (可选) ---
+    # 注意：Vanguard/BlackRock 官方 RSS 较少，主要靠新闻源覆盖
+    - id: "bloomberg-etf"
+      name: "Bloomberg ETF Intelligence"
+      url: "https://www.bloomberg.com/feed/podcast/etf-report.xml"
+      max_age_days: 3
 
 
 # ===============================================================
