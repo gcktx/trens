@@ -3,32 +3,26 @@
 #                      Version: 2.0.0
 # ═══════════════════════════════════════════════════════════════
 
-
 # 可视化配置编辑器地址: https://sansan0.github.io/TrendRadar/
-
 
 # ===============================================================
 # 1. 基础设置
 # ===============================================================
 app:
-  # 时区配置（影响所有时间显示、调度系统判断、数据存储）
   timezone: "Asia/Shanghai"
-  show_version_update: true           # 显示版本更新提示
-
+  show_version_update: true
 
 # ===============================================================
-# 1.5 调度系统 —— 什么时间做什么事
+# 1.5 调度系统
 # ===============================================================
 schedule:
-  enabled: true                         # 是否启用调度系统
-  preset: "morning_evening"             # 预设模板名称
-
+  enabled: true
+  preset: "morning_evening"
 
 # ===============================================================
 # 2. 数据源 - 热榜平台
 # ===============================================================
 platforms:
-  
   # === 综合新闻媒体类 ===
   - id: "toutiao"
     name: "今日头条"
@@ -106,284 +100,214 @@ platforms:
   # === 其他/工具类 ===
   - id: "chongbuluo"
     name: "虫部落"
-    
-  # 修复：补全了缺失的列表符号 "-" 和正确缩进
   - id: "tencent-hot"
     name: "腾讯新闻 综合早报"
-    
   - id: "cls-telegraph"
     name: "财联社 电报"
-    
   - id: "cls-depth"
     name: "财联社 深度"
-    
   - id: "fastbull-express"
     name: "法布财经 快讯"
-    
   - id: "fastbull-news"
     name: "法布财经 头条"
-
-  # 暂时失败的渠道（已注释）
-  # - id: "some-failed-source"
-  #   name: "Failed Source"
 
 # ===============================================================
 # 3. 数据源 - RSS 订阅
 # ===============================================================
 rss:
-  enabled: true                       # 是否启用 RSS 抓取
-
-  # 文章新鲜度过滤配置（全局默认值）
+  enabled: true
   freshness_filter:
-    enabled: true                     # 是否启用新鲜度过滤
-    max_age_days: 3                   # 全局默认：推送 3 天内的文章
+    enabled: true
+    max_age_days: 3
     
   feeds:
-    # ===============================================================
-    # 📂 第一组：个人理财与生活方式
-    # ===============================================================
+    # --- 第一组：个人理财 ---
     - id: "afford-anything"
       name: "Afford Anything"
       url: "https://affordanything.com/feed/"
-
     - id: "student-loan-hero"
       name: "Student Loan Hero"
       url: "https://studentloanhero.com/blog/feed"
-
     - id: "budgets-are-sexy"
       name: "Budgets Are Sexy"
       url: "https://feeds2.feedburner.com/budgetsaresexy"
-
     - id: "financial-samurai"
       name: "Financial Samurai"
       url: "https://www.financialsamurai.com/feed/"
-
     - id: "frugalwoods"
       name: "Frugalwoods"
       url: "https://feeds.feedburner.com/Frugalwoods"
-
     - id: "get-rich-slowly"
       name: "Get Rich Slowly"
       url: "https://www.getrichslowly.org/feed/"
-
     - id: "good-financial-cents"
       name: "Good Financial Cents"
       url: "https://www.goodfinancialcents.com/feed/"
-
     - id: "i-will-teach-you-to-be-rich"
       name: "I Will Teach You To Be Rich"
       url: "https://www.iwillteachyoutoberich.com/feed/"
-
     - id: "learn-to-trade-the-market"
       name: "Learn To Trade The Market"
       url: "https://www.learntotradethemarket.com/feed"
-
     - id: "making-sense-of-cents"
       name: "Making Sense Of Cents"
       url: "https://www.makingsenseofcents.com/feed"
-
     - id: "millennial-money"
       name: "Millennial Money"
       url: "https://millennialmoney.com/feed/"
-
     - id: "mintlife-blog"
       name: "MintLife Blog"
       url: "https://blog.mint.com/feed/"
-
     - id: "money-crashers"
       name: "Money Crashers"
       url: "https://www.moneycrashers.com/feed/"
-
     - id: "money-saving-mom"
       name: "Money Saving Mom"
       url: "https://moneysavingmom.com/feed/"
-
     - id: "money-under-30"
       name: "Money Under 30"
       url: "https://www.moneyunder30.com/feed"
-
     - id: "moneyning"
       name: "MoneyNing"
       url: "http://feeds.feedburner.com/MoneyNing"
-
     - id: "my-wife-quit-her-job"
       name: "MyWifeQuitHerJob"
       url: "https://mywifequitherjob.com/feed/"
-
     - id: "kitces-nerds-eye-view"
       name: "Kitces.com (Nerd's Eye View)"
       url: "http://feeds.feedblitz.com/kitcesnerdseyeview&x=1"
-
     - id: "nerdwallet"
       name: "NerdWallet"
       url: "https://www.nerdwallet.com/blog/feed/"
-
     - id: "oblivious-investor"
       name: "Oblivious Investor"
       url: "https://obliviousinvestor.com/feed/"
-
     - id: "reddit-personal-finance"
       name: "Reddit r/personalfinance"
       url: "https://reddit.com/r/personalfinance/.rss"
-
     - id: "saving-advice"
       name: "SavingAdvice.com Blog"
       url: "https://www.savingadvice.com/feed/"
-
     - id: "side-hustle-nation"
       name: "Side Hustle Nation"
       url: "https://www.sidehustlenation.com/feed"
-
     - id: "the-college-investor"
       name: "The College Investor"
       url: "https://thecollegeinvestor.com/feed/"
-
     - id: "the-dough-roller"
       name: "The Dough Roller"
       url: "https://www.doughroller.net/feed/"
-
     - id: "the-penny-hoarder"
       name: "The Penny Hoarder"
       url: "https://www.thepennyhoarder.com/feed/"
-
     - id: "well-kept-wallet"
       name: "Well Kept Wallet"
       url: "https://wellkeptwallet.com/feed/"
-
     - id: "wise-bread"
       name: "Wise Bread"
       url: "http://feeds.killeraces.com/wisebread"
 
-    # ===============================================================
-    # 🌍 第二组：全球宏观与权威机构
-    # ===============================================================
+    # --- 第二组：全球宏观 ---
     - id: "project-syndicate"
       name: "Project Syndicate"
       url: "https://www.project-syndicate.org/rss"
       max_age_days: 7
-
     - id: "economist-finance"
       name: "The Economist (Finance)"
       url: "https://www.economist.com/finance-and-economics/rss.xml"
       max_age_days: 5
-
     - id: "reuters-business"
       name: "Reuters Business"
       url: "https://www.reutersagency.com/feed/?best-topics=bus&post_type=best"
       max_age_days: 2
 
-    # ===============================================================
-    # 🇨🇳 第三组：中文核心快讯与深度
-    # ===============================================================
+    # --- 第三组：中文核心 ---
     - id: "wallstreetcn"
       name: "华尔街见闻"
       url: "https://wallstreetcn.com/feed"
       max_age_days: 1
-
     - id: "cls-telegraph"
       name: "财联社电报"
       url: "https://www.cls.cn/feed"
       max_age_days: 1
-
     - id: "caixin-finance"
       name: "财新金融"
       url: "https://www.caixin.com/rss/finance.xml"
       max_age_days: 3
 
-    # ===============================================================
-    # 📈 第四组：投资与市场数据
-    # ===============================================================
+    # --- 第四组：投资市场 ---
     - id: "seeking-alpha"
       name: "Seeking Alpha"
       url: "https://seekingalpha.com/feed.xml"
       max_age_days: 2
-
     - id: "aqr-insights"
       name: "AQR Capital Insights"
       url: "https://www.aqr.com/Insights/Perspectives/RSS"
       max_age_days: 10
-
     - id: "ben-carlson"
       name: "A Wealth of Common Sense"
       url: "https://awealthofcommonsense.com/feed/"
       max_age_days: 5
 
-    # ===============================================================
-    # 📊 第五组：市场指数、基金 (ETF) 与大宗商品
-    # ===============================================================
-    
-    # --- 原油与大宗商品 ---
+    # --- 第五组：指数与商品 ---
     - id: "oil-price-com"
       name: "Oil Price (Crude Oil News)"
       url: "https://www.oilprice.com/rss.xml"
       max_age_days: 1
-
     - id: "kitco-gold"
       name: "Kitco Metals (Gold/Oil)"
       url: "https://www.kitco.com/rss/precious-metals-news.xml"
       max_age_days: 2
-
-    # --- 美股大盘与 ETF 分析 ---
     - id: "etf-trend"
       name: "ETF Trends"
       url: "https://www.etftrends.com/feed/"
       max_age_days: 2
-
     - id: "seeking-alpha-etf"
       name: "Seeking Alpha (ETFs)"
       url: "https://seekingalpha.com/tag/etfs/feed.xml"
       max_age_days: 2
-
     - id: "marketwatch-markets"
       name: "MarketWatch (Markets)"
       url: "https://www.marketwatch.com/rss/markets"
       max_age_days: 1
-
-    # --- 特定基金/机构动态 ---
     - id: "bloomberg-etf"
       name: "Bloomberg ETF Intelligence"
       url: "https://www.bloomberg.com/feed/podcast/etf-report.xml"
       max_age_days: 3
 
-
 # ===============================================================
 # 4. 报告模式
 # ===============================================================
 report:
-  mode: "current"                     # 可选: daily | current | incremental
-  display_mode: "keyword"             # 分组维度: keyword | platform
-  sort_by_position_first: false       # 关键词排序方式
-  rank_threshold: 5                   # 排名高亮阈值
-  max_news_per_keyword: 0             # 每个关键词最大显示数量（0=不限制）
-
+  mode: "current"
+  display_mode: "keyword"
+  sort_by_position_first: false
+  rank_threshold: 5
+  max_news_per_keyword: 0
 
 # ===============================================================
 # 5. 推送内容控制
 # ===============================================================
 display:
   region_order:
-    - new_items                       # 1️⃣ 新增热点区域
-    - hotlist                         # 2️⃣ 热榜区域
-    - rss                             # 3️⃣ RSS 订阅区域
-    - standalone                      # 4️⃣ 独立展示区
-    - ai_analysis                     # 5️⃣ AI 分析区域
-
+    - new_items
+    - hotlist
+    - rss
+    - standalone
+    - ai_analysis
   regions:
-    hotlist: true                     # 热榜区域
-    new_items: false                  # 新增热点区域
-    rss: true                         # RSS 订阅区域
-    standalone: false                 # 独立展示区
-    ai_analysis: true                 # AI 分析区域
-
+    hotlist: true
+    new_items: false
+    rss: true
+    standalone: false
+    ai_analysis: true
   standalone:
     platforms: ["zhihu", "wallstreetcn-hot"]
     rss_feeds: []
     max_items: 20
 
-
 # ===============================================================
 # 6. 推送通知
-# ⚠️ 敏感信息请填写在 GitHub Secrets 中，不要直接写在这里
 # ===============================================================
 notification:
   enabled: true
@@ -416,7 +340,6 @@ notification:
       webhook_url: ""
       payload_template: ""
 
-
 # ===============================================================
 # 7. 存储配置
 # ===============================================================
@@ -440,20 +363,18 @@ storage:
     enabled: false
     days: 7
 
-
 # ===============================================================
-# 8. AI 模型配置（共享）
+# 8. AI 模型配置
 # ===============================================================
 ai:
   model: "deepseek/deepseek-chat"
-  api_key: ""                       # 建议使用环境变量 AI_API_KEY
+  api_key: ""
   api_base: ""
   timeout: 120
   temperature: 1.0
   max_tokens: 5000
   num_retries: 1
   fallback_models: []
-
 
 # ===============================================================
 # 9. AI 分析功能
@@ -468,7 +389,6 @@ ai_analysis:
   include_standalone: true
   include_rank_timeline: true
 
-
 # ===============================================================
 # 10. AI 翻译功能
 # ===============================================================
@@ -476,7 +396,6 @@ ai_translation:
   enabled: false
   language: "中文"
   prompt_file: "ai_translation_prompt.txt"
-
 
 # ===============================================================
 # 11. 高级设置
@@ -486,25 +405,20 @@ advanced:
   version_check_url: "https://raw.githubusercontent.com/sansan0/TrendRadar/refs/heads/master/version"
   mcp_version_check_url: "https://raw.githubusercontent.com/sansan0/TrendRadar/refs/heads/master/version_mcp"
   configs_version_check_url: "https://raw.githubusercontent.com/sansan0/TrendRadar/refs/heads/master/version_configs"
-
   crawler:
     request_interval: 2000
     use_proxy: false
     default_proxy: "http://127.0.0.1:10801"
-
   rss:
     request_interval: 1000
     timeout: 15
     use_proxy: false
     proxy_url: ""
-
   weight:
     rank: 0.6
     frequency: 0.3
     hotness: 0.1
-
   max_accounts_per_channel: 3
-  
   batch_size:
     default: 4000
     dingtalk: 20000
