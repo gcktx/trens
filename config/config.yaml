@@ -7,9 +7,10 @@ app:
   timezone: "Asia/Shanghai"
   show_version_update: true
 
+# ✅ 修改点 1: 切换到 custom 模式，启用 08:00-21:00 推送策略
 schedule:
   enabled: true
-  preset: "morning_evening"
+  preset: "custom"
 
 # ✅ 关键修复：platforms 必须包含 enabled 和 sources 键
 platforms:
@@ -136,14 +137,15 @@ display:
     rss_feeds: []
     max_items: 20
 
-# ⚠️ 暂时关闭通知，防止因 webhook 为空或格式问题导致潜在错误
+# ✅ 修改点 2 & 3: 开启通知并填入钉钉 Webhook
 notification:
-  enabled: false
+  enabled: true
   channels:
     feishu:
       webhook_url: ""
     dingtalk:
-      webhook_url: ""
+      # ✅ 已填入你的钉钉机器人地址
+      webhook_url: "https://oapi.dingtalk.com/robot/send?access_token=0a3573bc80945d385bc6b2fc31481918e26458ce01fc517498a8387f0b0abfae"
     telegram:
       bot_token: ""
       chat_id: ""
