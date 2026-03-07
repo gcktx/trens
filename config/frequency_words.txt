@@ -33,6 +33,7 @@
 /字节 | 张一鸣 | 梁汝波 | 抖音|\bByteDance\b|\bTikTok\b|\bDouyin\b|\bLark\b|\bCapCut\b/ => 字节跳动
 /腾讯 | 鹅厂 | 马化腾 | 微信|QQ|天美 | 阅文集团 | 微众银行|\bTencent\b|\bPony Ma\b|\bWeChat\b|\bLightSpeed\b|\bWeBank\b/ => 腾讯
 /qwen|minimax|glm/ => 国产开源模型
+/银行螺丝钉 | 螺丝钉 | 钉大 | 指数基金估值 | 每日估值/ =>银行螺丝钉
 
 # 美股七巨头与 AI 核心
 /特斯拉 | 马斯克|\bTesla\b|\bElon Musk\b|\bCybertruck\b|\bModel 3\b|\bModel Y\b|\bModel S\b|\bModel X\b|\bFSD\b/ => 特斯拉
