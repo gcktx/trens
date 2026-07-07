@@ -145,7 +145,7 @@ notification:
       webhook_url: ""
     dingtalk:
       # ✅ 已填入你的钉钉机器人地址
-      webhook_url: "https://oapi.dingtalk.com/robot/send?access_token=0a3573bc80945d385bc6b2fc31481918e26458ce01fc517498a8387f0b0abfae"
+      webhook_url: "https://oapi.dingtalk.com/robot/send?access_token=229792885f8ea53308ad961bc60c25ac2923be7bc648b823e17b3a288d605db9"
     telegram:
       bot_token: ""
       chat_id: ""
