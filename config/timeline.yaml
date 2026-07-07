@@ -1,119 +1,57 @@
 # ═══════════════════════════════════════════════════════════════
-#                   TrendRadar 时间线配置
-#                      Version: 1.0.2 (定制版 | 日间每小时推送)
+# 调度时间配置文件
+# ─
+# 顶层字段说明:
+#   default   - 全局默认配置（collect/push/analyze/once）
+#   periods   - 时段模板，按名称定义各时段的行为
+#   presets   - 预置日程（office_hours / nightly / always_on…）
+#   custom    - 自定义日程（user-defined schedule）
+#
+# 当 Scheduler.resolve() 查找当前时段时：
+#   1) 用今天是星期几 → week_map 找到 day_plan 名称
+#   2) 在 day_plans 中找到该 day_plan → 获得 periods 列表
+#   3) 遍历 periods，用 HH:MM 判断落在哪个时段
+#   4) 将时段配置与 default 合并返回
 # ═══════════════════════════════════════════════════════════════
 
+# ── 全局默认配置 ──────────────────────────────────────────────
+default:
+  collect: true          # 默认允许采集
+  push: false            # 默认不推送
+  analyze: false         # 默认不分析
+  once:
+    analyze: false       # 分析不设限
+    push: false          # 推送不设限
+
+# ── 时段模板 ────────────────────────────────────────────────
+# 这些是命名模板，用于 day_plans 中按名称引用
+periods:
+  work_hours:
+    collect: true
+    analyze: true
+    push: true
+    report_mode: "incremental"   # 增量报告，逐步累积
+    # ⚠️ 注意：commit 动作不由调度器控制（现已移除 commit/report 开关）
+    once:
+      push: false                # 允许重复推送（每次循环都推）
+      analyze: false             # 允许重复分析
+
+  silent:
+    collect: true                # 静默时段只采集，不推送不分析
+    push: false
+    analyze: false
+
+# ── 预置日程 ─────────────────────────────────────────────────
 presets:
-  always_on:
-    name: "全天监控"
-    description: "全天候监控，有新增立即推送。"
-    default:
-      collect: true
-      analyze: false
-      ai_mode: "current"
-      push: true
-      report_mode: "incremental"
-      once:
-        analyze: false
-        push: false
-    periods: {}
-    day_plans:
-      all_day:
-        periods: []
-    week_map:
-      1: "all_day"
-      2: "all_day"
-      3: "all_day"
-      4: "all_day"
-      5: "all_day"
-      6: "all_day"
-      7: "all_day"
-
-  morning_evening:
-    name: "早晚汇总"
-    description: "全天推送 + 晚间当日汇总。"
-    default:
-      collect: true
-      analyze: true
-      ai_mode: "current"
-      push: true
-      report_mode: "current"
-      once:
-        analyze: false
-        push: false
-    periods:
-      evening_summary:
-        name: "晚间汇总"
-        start: "20:00"
-        end: "22:00"
-        analyze: true
-        ai_mode: "daily"
-        report_mode: "daily"
-        once:
-          analyze: true
-          push: true
-    day_plans:
-      all_day:
-        periods: ["evening_summary"]
-    week_map:
-      1: "all_day"
-      2: "all_day"
-      3: "all_day"
-      4: "all_day"
-      5: "all_day"
-      6: "all_day"
-      7: "all_day"
-
+  # ---------- 办公模式 ----------
   office_hours:
-    name: "办公时间"
-    description: "工作日三段式推送，周末增量自由推。"
-    default:
-      collect: true
-      analyze: false
-      ai_mode: "current"
-      push: false
-      report_mode: "current"
-      once:
-        analyze: true
-        push: true
-    periods:
-      morning_briefing:
-        name: "到岗速览"
-        start: "09:00"
-        end: "11:00"
-        analyze: true
-        ai_mode: "current"
-        push: true
-        report_mode: "current"
-      noon_update:
-        name: "午间热点"
-        start: "13:00"
-        end: "15:00"
-        push: true
-        report_mode: "current"
-      closing_summary:
-        name: "收工汇总"
-        start: "17:00"
-        end: "19:00"
-        analyze: true
-        ai_mode: "daily"
-        push: true
-        report_mode: "daily"
-      weekend_free:
-        name: "周末自由"
-        start: "08:00"
-        end: "23:00"
-        ai_mode: "current"
-        push: true
-        report_mode: "incremental"
-        once:
-          analyze: false
-          push: false
     day_plans:
       workday:
-        periods: ["morning_briefing", "noon_update", "closing_summary"]
+        periods:
+          - day_active
       weekend:
-        periods: ["weekend_free"]
+        periods:
+          - day_active
     week_map:
       1: "workday"
       2: "workday"
@@ -122,39 +60,49 @@ presets:
       5: "workday"
       6: "weekend"
       7: "weekend"
-
-  night_owl:
-    name: "夜猫子模式"
-    description: "午后速览 + 深夜全天汇总。"
-    default:
-      collect: true
-      analyze: false
-      ai_mode: "current"
-      push: false
-      report_mode: "current"
-      once:
-        analyze: true
-        push: true
+    # ── 时段定义（该日程使用的具体时段配置）──
+    # 注意：periods 列表与 day_plans 同层级
     periods:
-      afternoon_peek:
-        name: "午后速览"
-        start: "15:00"
-        end: "17:00"
+      day_active:
+        start: "08:00"
+        end: "20:50"
+        collect: true
         analyze: true
-        ai_mode: "current"
-        push: true
-        report_mode: "current"
-      late_night:
-        name: "深夜汇总"
-        start: "22:00"
-        end: "01:00"
-        analyze: true
-        ai_mode: "daily"
         push: true
         report_mode: "daily"
+        once:
+          push: false
+          analyze: false
+
+  # ---------- 夜间模式 ----------
+  nightly:
+    day_plans:
+      night:
+        periods:
+          - night_active
+    week_map:
+      1: "night"
+      2: "night"
+      3: "night"
+      4: "night"
+      5: "night"
+      6: "night"
+      7: "night"
+    periods:
+      night_active:
+        start: "22:00"
+        end: "07:00"
+        collect: true
+        analyze: false
+        push: false
+
+  # ---------- 全天候模式 ----------
+  always_on:
     day_plans:
       all_day:
-        periods: ["afternoon_peek", "late_night"]
+        periods:
+          - day_active
+          - night_silent
     week_map:
       1: "all_day"
       2: "all_day"
@@ -163,67 +111,98 @@ presets:
       5: "all_day"
       6: "all_day"
       7: "all_day"
+    periods:
+      day_active:
+        start: "08:00"
+        end: "20:50"
+        collect: true
+        analyze: true
+        push: true
+        report_mode: "periodic"
+        once:
+          push: false
+          analyze: false
+      night_silent:
+        start: "21:00"
+        end: "08:00"
+        collect: true
+        analyze: false
+        push: false
+        report_mode: "daily"
 
 # ═══════════════════════════════════════════════════════════════
-# 5️⃣ 自定义模式 (已更新：日间每小时推送)
+# 自定义模式（用户专属日程）
+# ─
+# 结构：
+#   custom:
+#     periods:                  # ← 时段模板（与本文件顶层 periods 相同作用）
+#       <period_name>:          #     供下方 day_plans 引用
+#         start: "HH:MM"
+#         end: "HH:MM"
+#         collect: true/false
+#         analyze: true/false
+#         push: true/false
+#         report_mode: "incremental" | "daily" | "current"
+#         once:
+#           push: true/false
+#           analyze: true/false
+#
+#     day_plans:                # ← 每天的计划 = 一组时段
+#       <plan_name>:
+#         periods:
+#           - <period_name>     #     引用上方定义的时段
+#           - ...
+#
+#     week_map:                 # ← 星期 → day_plan 映射
+#       1: <plan_name>          #     1=周一 … 7=周日
+#       ...
 # ═══════════════════════════════════════════════════════════════
+
 custom:
-  name: "日间每小时推送 (08:00-20:50)"
-  description: "白天每小时整点推送一次；21:00-次日08:00 仅静默采集。"
-
-  # 默认配置 (兜底策略：静默采集)
-  default:
-    collect: true
-    analyze: false
-    ai_mode: "current"
-    push: false
-    report_mode: "incremental"
-    once:
-      analyze: false
-      push: false
-
-  # 第 1 步：定义时间段积木
+  # ── 时段定义 ──────────────────────────────
   periods:
-    # 🌞 日间活跃期：08:00 - 20:50
-    day_active:
-      name: "日间定时推送"
+    work_hours:
       start: "08:00"
-      end: "20:50"
+      end: "21:00"
       collect: true
+      analyze: true
       push: true
-      analyze: false
-      ai_mode: "current"
-      report_mode: "periodic"      # ✅ 核心修改：改为定时周期模式
-      cron: "0 8-20 * * *"         # ✅ 每小时整点触发 (08:00, 09:00 ... 20:00)
-      # ⚠️ 兼容提示：若 TrendRadar 不支持 cron，请替换为以下之一：
-      # schedule_type: "hourly"
-      # interval_minutes: 60
+      report_mode: "incremental"
       once:
-        push: false                # ✅ 关闭事件驱动，严格遵循定时节奏
+        push: false
+        analyze: false
 
-    # 🌙 夜间静默期：21:00 - 次日 08:00 (跨天)
-    night_silent:
-      name: "夜间静默采集"
+    silent:
       start: "21:00"
       end: "08:00"
       collect: true
       push: false
       analyze: false
 
-  # 第 2 步 & 第 3 步：日计划与周映射
+  # ── 每日计划 ──────────────────────────────
   day_plans:
-    all_day:
-      periods: ["day_active", "night_silent"]
-  
-  week_map:
-    1: "all_day"
-    2: "all_day"
-    3: "all_day"
-    4: "all_day"
-    5: "all_day"
-    6: "all_day"
-    7: "all_day"
+    workday:
+      periods:
+        - work_hours
+    rest:
+      periods:
+        - silent
 
-  # ✅ 冲突策略：后定义优先
-  overlap:
-    policy: "last_wins"
+  # ── 星期映射 ──────────────────────────────
+  week_map:
+    1: "workday"     # 周一：工作日 08:00-21:00 增量推送
+    2: "workday"     # 周二
+    3: "workday"     # 周三
+    4: "workday"     # 周四
+    5: "workday"     # 周五
+    6: "workday"     # 周六
+    7: "rest"        # 周日：静默（仅采集，不推送不分析）
+
+  # ── 顶层默认配置（可覆盖全局默认）────────
+  default:
+    collect: true
+    push: false
+    analyze: false
+    once:
+      analyze: false
+      push: false
